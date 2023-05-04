@@ -1,0 +1,19 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,700;0,900;1,500&display=swap");
+:root {
+  --foreground-rgb: 42, 42, 42;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 237, 237, 237;
+  --background-maze-rgb: 212, 212, 212;
+  --bloc-maze-rgb: 255, 255, 255;
+  --active-bloc-maze-rgb: 6, 255, 0;
+  --init-bloc-maze-rgb: 255, 228, 0; 
+  --end-bloc-maze-rgb: 255, 142, 0;  
+}
+* {
+  box-sizing: border-box;
+  transition: all ease .2s;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+}
