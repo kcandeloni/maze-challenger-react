@@ -13,7 +13,7 @@ export default function Bloc({ b }) {
   }
   if(b === 2) {
     return(
-      <ContainerBloc>@</ContainerBloc>
+      <ContainerBloc></ContainerBloc>
     );
   }
   if(b === 3) {
@@ -28,12 +28,12 @@ export default function Bloc({ b }) {
   }
   if(b === 5) {
     return(
-      <ContainerBloc className="init">@</ContainerBloc>
+      <ContainerBloc className="init"></ContainerBloc>
     );
   }
   if(b === 6) {
     return(
-      <ContainerBloc className="end">@</ContainerBloc>
+      <ContainerBloc className="end"></ContainerBloc>
     );
   }
   return(
