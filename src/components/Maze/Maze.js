@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 import getMaze from "./../../services/serviceMaze";
 import { useState } from "react";
 import Line from "./Line";
+import ControllerMove from "./ControllerMove";
+import { GiOctopus } from "react-icons/gi";
 
-function RenderMaze({ maze, position }) {
+function RenderMaze({ maze, position, move }) {
   return (
     <ContainerMaze>
-      {maze.map(l => <Line key={Math.floor(Math.random() * 1000)} line={l}/>)}
-      <ContainerPosition {...position} >@</ContainerPosition>
+      {maze.map(l => <Line key={Math.floor(Math.random() * 10000)} line={l}/>)}
+      <ContainerPosition {...position} ><GiOctopus /></ContainerPosition>
+      <ControllerMove move={move}/>
     </ContainerMaze>
   );
 }
@@ -20,45 +23,42 @@ export default function Maze({ n = 8 }) {
   const [positionUpdated, setPositionUpdated] = useState(position);
   function updatedMaze(mazeN) {
     setMazeUpdated(getMaze(mazeN));
+    setPositionUpdated(position);
   }
 
   function move(direction = "left") {
     position = positionUpdated;
-    function validMove(value) {
-      if(value < 0)return false;
-      if(value >= mazeUpdated[0].length)return false;
-      return true;
+    function isInvalid(value) {
+      if(value < 0)return true;
+      if(value >= mazeUpdated[0].length)return true;
+      return false;
     }
     if(direction === "right") {
-      if(validMove(position.column + 1)) {
-        position.column++;
-      }
+      if(isInvalid(position.column + 1))return;
+      position.column++;
     }
     if(direction === "left") {
-      if(validMove(position.column - 1)) {
-        position.column--;
-      }
+      if(isInvalid(position.column - 1))return;
+      position.column--;
     }
     if(direction === "up") {
-      if(validMove(position.line - 1)) {
-        position.line--;
-      }
+      if(isInvalid(position.line - 1))return;
+      position.line--;
     }
     if(direction === "down") {
-      if(validMove(position.line + 1)) {
-        position.line++;
-      }
+      if(isInvalid(position.line + 1))return;
+      position.line++;
     }
     setMazeUpdated([...mazeUpdated]);
     setPositionUpdated(position);
+    console.log(position);
   }
   return (
     <div>
       <h1 onClick={() => updatedMaze(8)}>Maze 8</h1>
       <h1 onClick={() => updatedMaze(16)}>Maze 16</h1>
       <h1 onClick={() => updatedMaze(32)}>Maze 32</h1>
-      <RenderMaze maze={mazeUpdated} position={positionUpdated} />
-      <button onClick={() => move("right")}>move test</button>
+      <RenderMaze maze={mazeUpdated} position={positionUpdated} move={move}/>
       <Link to="/rank">Rank</Link>
     </div>
   );
@@ -73,6 +73,7 @@ const ContainerMaze = styled.div`
 `;
 
 const ContainerPosition = styled.div`
+  font-size: 42px;
   position: absolute;
   ${props => {
     return `
