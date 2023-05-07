@@ -2,25 +2,30 @@ import styled from "styled-components";
 import { useEffect } from "react";
 
 export default function ControllerMove({ move }) {
+  function handleKeyUp(event) {
+    if (event.keyCode === 0x27) {
+      event.preventDefault();
+      move("right");
+    }
+    if (event.keyCode === 0x25) {
+      event.preventDefault();
+      move("left");
+    }
+    if (event.keyCode === 0x26) {
+      event.preventDefault();
+      move("up");
+    }
+    if (event.keyCode === 0x28) {
+      event.preventDefault();
+      move("down");
+    }
+  }
   useEffect(() => {
-    window.addEventListener("keyup", function(event) {
-      if (event.keyCode === 0x27) {
-        event.preventDefault();
-        move("right");
-      }
-      if (event.keyCode === 0x25) {
-        event.preventDefault();
-        move("left");
-      }
-      if (event.keyCode === 0x26) {
-        event.preventDefault();
-        move("up");
-      }
-      if (event.keyCode === 0x28) {
-        event.preventDefault();
-        move("down");
-      }
-    });}, []);
+    window.addEventListener("keyup", handleKeyUp);
+    return () => {
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, []);
   return (
     <ContainerController>
       <button onClick={() => move("up")}>up</button>

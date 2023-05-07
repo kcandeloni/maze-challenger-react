@@ -4,7 +4,7 @@ import Bloc from "./Bloc";
 export default function Line({ line }) {
   return (
     <ContainerLine>
-      {line.map(b => <Bloc key={Math.floor(Math.random() * 10000)} b={b} />)}
+      {line.map((b, index) => <Bloc key={index} b={b} />)}
     </ContainerLine>
   );
 }

@@ -9,7 +9,7 @@ import { GiOctopus } from "react-icons/gi";
 function RenderMaze({ maze, position, move }) {
   return (
     <ContainerMaze>
-      {maze.map(l => <Line key={Math.floor(Math.random() * 10000)} line={l}/>)}
+      {maze.map((l, index) => <Line key={index} line={l}/>)}
       <ContainerPosition {...position} ><GiOctopus /></ContainerPosition>
       <ControllerMove move={move}/>
     </ContainerMaze>
@@ -19,15 +19,15 @@ function RenderMaze({ maze, position, move }) {
 export default function Maze({ n = 8 }) {
   const maze = getMaze(n);
   const [mazeUpdated, setMazeUpdated] = useState(maze);
-  let position = { line: 0, column: 0 };
+  const position = { line: 0, column: 0 };
   const [positionUpdated, setPositionUpdated] = useState(position);
   function updatedMaze(mazeN) {
     setMazeUpdated(getMaze(mazeN));
-    setPositionUpdated(position);
+    setPositionUpdated({ ...position });
   }
 
   function move(direction = "left") {
-    position = positionUpdated;
+    const position = positionUpdated;
     function isInvalid(value) {
       if(value < 0)return true;
       if(value >= mazeUpdated[0].length)return true;
@@ -50,7 +50,7 @@ export default function Maze({ n = 8 }) {
       position.line++;
     }
     setMazeUpdated([...mazeUpdated]);
-    setPositionUpdated(position);
+    setPositionUpdated({ ...position });
     console.log(position);
   }
   return (
