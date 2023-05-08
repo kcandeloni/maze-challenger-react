@@ -1,31 +1,14 @@
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { GiOctopus } from "react-icons/gi";
 
 import getMaze from "./../../services/serviceMaze";
-import Line from "./Line";
-import ControllerMove from "./ControllerMove";
-
-function RenderMaze({ maze, position, move }) {
-  return (
-    <ContainerMaze>
-      {maze.map((l, index) => <Line key={index} line={l}/>)}
-      <ContainerPosition {...position} ><GiOctopus /></ContainerPosition>
-      <ControllerMove move={move}/>
-    </ContainerMaze>
-  );
-}
+import RenderMaze from "./RenderMeze";
 
 export default function Maze({ n }) {
   const maze = getMaze(n);
   const [mazeUpdated, setMazeUpdated] = useState(maze);
   const position = { line: 0, column: 0 };
   const [positionUpdated, setPositionUpdated] = useState(position);
-  function updatedMaze(mazeN) {
-    setMazeUpdated(getMaze(mazeN));
-    setPositionUpdated({ ...position });
-  }
 
   function move(direction = "left") {
     const position = positionUpdated;
@@ -52,7 +35,6 @@ export default function Maze({ n }) {
     }
     setMazeUpdated([...mazeUpdated]);
     setPositionUpdated({ ...position });
-    console.log(position);
   }
   return (
     <div>
@@ -70,31 +52,3 @@ export default function Maze({ n }) {
     </div>
   );
 }
-
-const ContainerMaze = styled.div`
-    position: relative;
-    margin: 0 auto;
-    background: rgb(var(--background-maze-rgb));
-    border-radius: 5px;
-    padding: 2px;
-`;
-
-const ContainerPosition = styled.div`
-  font-size: 42px;
-  position: absolute;
-  ${props => {
-    return `
-    top: ${(props.line * 46) + 4}px;
-    `;
-  }}
-  ${props => {
-    return `
-    left: ${(props.column * 46) + 4}px;
-    `;
-  }}
-  width: 42px;
-  height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;

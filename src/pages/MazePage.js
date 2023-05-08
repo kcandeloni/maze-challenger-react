@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Maze from "../components/Maze";
 
 export default function MazePage() {   
