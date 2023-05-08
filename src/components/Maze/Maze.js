@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import getMaze from "./../../services/serviceMaze";
 import { useState } from "react";
+import { GiOctopus } from "react-icons/gi";
+
+import getMaze from "./../../services/serviceMaze";
 import Line from "./Line";
 import ControllerMove from "./ControllerMove";
-import { GiOctopus } from "react-icons/gi";
 
 function RenderMaze({ maze, position, move }) {
   return (
@@ -16,7 +17,7 @@ function RenderMaze({ maze, position, move }) {
   );
 }
 
-export default function Maze({ n = 8 }) {
+export default function Maze({ n }) {
   const maze = getMaze(n);
   const [mazeUpdated, setMazeUpdated] = useState(maze);
   const position = { line: 0, column: 0 };
@@ -55,9 +56,15 @@ export default function Maze({ n = 8 }) {
   }
   return (
     <div>
-      <h1 onClick={() => updatedMaze(8)}>Maze 8</h1>
-      <h1 onClick={() => updatedMaze(16)}>Maze 16</h1>
-      <h1 onClick={() => updatedMaze(32)}>Maze 32</h1>
+      <Link to="/maze/8">
+        <h1>Maze 8</h1>
+      </Link>
+      <Link to="/maze/16">
+        <h1>Maze 16</h1>
+      </Link>
+      <Link to="/maze/32">
+        <h1>Maze 32</h1>
+      </Link>
       <RenderMaze maze={mazeUpdated} position={positionUpdated} move={move}/>
       <Link to="/rank">Rank</Link>
     </div>
