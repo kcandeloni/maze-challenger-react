@@ -4,12 +4,12 @@ import { GiOctopus } from "react-icons/gi";
 import Line from "./Line";
 import ControllerMove from "./ControllerMove";
 
-export default function RenderMaze({ maze, position, move }) {
+export default function RenderMaze({ maze, position, children }) {
   return (
     <ContainerMaze>
       {maze.map((l, index) => <Line key={index} line={l}/>)}
       <ContainerPosition {...position} ><GiOctopus /></ContainerPosition>
-      <ControllerMove move={move}/>
+      {children}
     </ContainerMaze>
   );
 }
