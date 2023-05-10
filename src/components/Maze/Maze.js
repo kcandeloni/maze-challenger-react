@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import getMaze from "./../../services/serviceMaze";
 import RenderMaze from "./RenderMeze";
 import { updateMaze } from "./updateMaze";
+import Rules from "../common/Rules";
 
 export default function Maze({ n }) {
   const maze = getMaze(n);
@@ -140,6 +141,7 @@ export default function Maze({ n }) {
       <RenderMaze maze={mazeUpdated} position={positionUpdated} >  
         { endGame() ? <Result /> : <ControllerMove />}
       </ RenderMaze>
+      <Rules />
       <Link to="/rank">Rank</Link>
     </div>
   );
@@ -157,4 +159,7 @@ const ContainerController = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  button{
+    margin: 8px;
+  }
 `;
