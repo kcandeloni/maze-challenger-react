@@ -14,6 +14,11 @@ export default function Maze({ n }) {
   const position = { line: 0, column: 0 };
   const [positionUpdated, setPositionUpdated] = useState(position);
 
+  function reset() {
+    setMazeUpdated(maze);
+    setPositionUpdated(position);
+  }
+
   function move(direction = "left") {
     const position = positionUpdated;
     function isInvalid(value) {
@@ -62,8 +67,7 @@ export default function Maze({ n }) {
       }
       if(event.keyCode === 0x20) {
         event.preventDefault();
-        setMazeUpdated(maze);
-        setPositionUpdated(position);
+        reset();
       }
     }
     useEffect(() => {
@@ -95,8 +99,7 @@ export default function Maze({ n }) {
     function handleReset(event) {
       if (event.keyCode === 0x0D || event.keyCode === 0x20 || event.keyCode === 0x1B) {
         event.preventDefault();
-        setMazeUpdated(maze);
-        setPositionUpdated(position);
+        reset();
       }
     }
     useEffect(() => {
@@ -107,9 +110,20 @@ export default function Maze({ n }) {
     }, []);
     const state = mazeUpdated[positionUpdated.line][positionUpdated.column];
     if(state === 4) {
-      return (<ContainerController>Win</ContainerController>);
+      return (<ContainerController>
+        <>Win</>
+        <button onClick={() => reset()}>
+          Reset
+        </button>
+      </ContainerController>);
     }
-    return (<ContainerController>Lose</ContainerController>);
+    return (
+      <ContainerController>
+        <>Lose</>
+        <button onClick={() => reset()}>
+          Reset
+        </button>
+      </ContainerController>);
   }
 
   return (
