@@ -60,6 +60,11 @@ export default function Maze({ n }) {
         event.preventDefault();
         move("down");
       }
+      if(event.keyCode === 0x20) {
+        event.preventDefault();
+        setMazeUpdated(maze);
+        setPositionUpdated(position);
+      }
     }
     useEffect(() => {
       window.addEventListener("keyup", handleKeyUp);
@@ -79,6 +84,34 @@ export default function Maze({ n }) {
     );
   }
 
+  function endGame() {
+    const state = mazeUpdated[positionUpdated.line][positionUpdated.column];
+    if( state === 1 || state === 4) {
+      return true;
+    }
+    return false;
+  }
+  function Result() {
+    function handleReset(event) {
+      if (event.keyCode === 0x0D || event.keyCode === 0x20 || event.keyCode === 0x1B) {
+        event.preventDefault();
+        setMazeUpdated(maze);
+        setPositionUpdated(position);
+      }
+    }
+    useEffect(() => {
+      window.addEventListener("keyup", handleReset);
+      return () => {
+        window.removeEventListener("keyup", handleReset);
+      };
+    }, []);
+    const state = mazeUpdated[positionUpdated.line][positionUpdated.column];
+    if(state === 4) {
+      return (<ContainerController>Win</ContainerController>);
+    }
+    return (<ContainerController>Lose</ContainerController>);
+  }
+
   return (
     <div>
       <Link to="/maze/8">
@@ -90,8 +123,8 @@ export default function Maze({ n }) {
       <Link to="/maze/32">
         <h1>Maze 32</h1>
       </Link>
-      <RenderMaze maze={mazeUpdated} position={positionUpdated} >
-        <ControllerMove />  
+      <RenderMaze maze={mazeUpdated} position={positionUpdated} >  
+        { endGame() ? <Result /> : <ControllerMove />}
       </ RenderMaze>
       <Link to="/rank">Rank</Link>
     </div>
