@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useState } from "react";
 
 import styled from "styled-components";
@@ -8,12 +7,18 @@ import getMaze from "./../../services/serviceMaze";
 import RenderMaze from "./RenderMeze";
 import { updateMaze } from "./updateMaze";
 import Rules from "../common/Rules";
+import Options from "../common/Options";
+import Info from "../common/Info";
+import Menu from "../common/Menu";
+import Rank from "../common/Rank";
+import { ContainerSelect } from "../common/ContainerSelect";
 
 export default function Maze({ n }) {
   const maze = getMaze(n);
   const [mazeUpdated, setMazeUpdated] = useState(maze);
   const position = { line: 0, column: 0 };
   const [positionUpdated, setPositionUpdated] = useState(position);
+  const [select, setSelect] = useState(false);
 
   function reset() {
     setMazeUpdated(maze);
@@ -129,20 +134,19 @@ export default function Maze({ n }) {
 
   return (
     <div>
-      <Link to="/maze/8">
-        <h1>Maze 8</h1>
-      </Link>
-      <Link to="/maze/16">
-        <h1>Maze 16</h1>
-      </Link>
-      <Link to="/maze/32">
-        <h1>Maze 32</h1>
-      </Link>
+      <Menu>
+        <Options select={select} setSelect={setSelect}/>
+        <div className="minimenu">
+          <Rules setSelect={setSelect}/>
+          <Rank setSelect={setSelect}/>
+          <Info setSelect={setSelect}/>
+        </div>
+      </Menu>
+      {select ? <ContainerSelect onClick={() => setSelect(false)}>{ select }</ ContainerSelect> : ""}
       <RenderMaze maze={mazeUpdated} position={positionUpdated} >  
         { endGame() ? <Result /> : <ControllerMove />}
       </ RenderMaze>
-      <Rules />
-      <Link to="/rank">Rank</Link>
+
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { GiBookmarklet } from "react-icons/gi";
+import { ContainerIconMenu } from "./ContainerIconMenu";
 
-export default function Rules() {
-  const [rulesState, setRulesState] = useState(false);
+export default function Rules({ setSelect }) {
   function ResumeRules() {
     return (
       <ContainerRules>
@@ -13,22 +13,16 @@ export default function Rules() {
       </ContainerRules>);
   }
   return (
-    <div onClick={() => setRulesState(!rulesState)}>
-      <p>Rules</p>
-      {rulesState ? <ResumeRules /> : ""}
-    </div>
+    <ContainerIconMenu onClick={() => setSelect(ResumeRules())}>
+      <GiBookmarklet />
+    </ContainerIconMenu>
   );
 }
 
 const ContainerRules = styled.div`
-  max-width: 372px;
   font-size: 12px;
-  background-color: aliceblue;
-  opacity: 0.5;
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
   gap: 6px;
-  padding: 5px;
   word-break: normal;
 `;
