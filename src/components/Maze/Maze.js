@@ -12,6 +12,7 @@ import Info from "../common/Info";
 import Menu from "../common/Menu";
 import Rank from "../common/Rank";
 import { ContainerSelect } from "../common/ContainerSelect";
+import TopBar from "../common/TopBar";
 
 export default function Maze({ n }) {
   const maze = getMaze(n);
@@ -134,15 +135,16 @@ export default function Maze({ n }) {
 
   return (
     <div>
+      <TopBar />
       <Menu>
         <Options select={select} setSelect={setSelect}/>
         <div className="minimenu">
-          <Rules setSelect={setSelect}/>
-          <Rank setSelect={setSelect}/>
-          <Info setSelect={setSelect}/>
+          <Rules select={select} setSelect={setSelect}/>
+          <Rank select={select} setSelect={setSelect}/>
+          <Info select={select} setSelect={setSelect}/>
         </div>
       </Menu>
-      {select ? <ContainerSelect onClick={() => setSelect(false)}>{ select }</ ContainerSelect> : ""}
+      {select ? <ContainerSelect setSelect={setSelect}>{ select }</ ContainerSelect> : ""}
       <RenderMaze maze={mazeUpdated} position={positionUpdated} >  
         { endGame() ? <Result /> : <ControllerMove />}
       </ RenderMaze>

@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { GiOctopus } from "react-icons/gi";
 
 import Line from "./Line";
-import ControllerMove from "./ControllerMove";
 
 export default function RenderMaze({ maze, position, children }) {
   return (
@@ -23,21 +22,21 @@ const ContainerMaze = styled.div`
 `;
 
 const ContainerPosition = styled.div`
-font-size: 42px;
-position: absolute;
-${props => {
+  font-size: 42px;
+  position: absolute;
+  ${props => {
     return `
-  top: ${(props.line * 46) + 4}px;
-  `;
+    top: ${(props.line * 46) + 4}px;
+    `;
   }}
-${props => {
+  ${props => {
     return `
-  left: ${(props.column * 46) + 4}px;
-  `;
+    left: ${(props.column * 46) + 4}px;
+    `;
   }}
-width: 42px;
-height: 42px;
-display: flex;
-align-items: center;
-justify-content: center;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

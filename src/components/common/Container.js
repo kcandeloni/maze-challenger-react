@@ -7,5 +7,5 @@ export default styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    padding-bottom: 18px;
 `;

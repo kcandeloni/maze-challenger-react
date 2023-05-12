@@ -27,4 +27,5 @@ const ContainerOp = styled.div`
   flex-direction: row;
   gap: 6px;
   word-break: normal;
+  font-size: 16px;
 `;
