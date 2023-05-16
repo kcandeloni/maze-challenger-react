@@ -14,7 +14,7 @@ const Container = styled.div`
   position: relative;
   max-width: 372px;
   background-color: aliceblue;
-  opacity: 0.5;
+  opacity: 0.75;
   display: flex;
   flex-direction: column;
   border-radius: 5px;

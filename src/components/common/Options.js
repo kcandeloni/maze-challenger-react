@@ -9,8 +9,9 @@ export default function Options({ select, setSelect }) {
     return (
       <ContainerOp>
         <div><Link to="/maze/8">8x8</Link></div> 
-        <div><Link to="/maze/16">16x16</Link></div>
-        <div><Link to="/maze/32">32x32</Link></div>
+        <div onClick={() => setSelect("Em breve...")}>16x16</div>
+        <div onClick={() => setSelect("Em breve...")}>32x32</div>
+        <div onClick={() => setSelect("Em breve...")}>random maze</div>
       </ContainerOp>
     );
   }
@@ -28,4 +29,7 @@ const ContainerOp = styled.div`
   gap: 6px;
   word-break: normal;
   font-size: 16px;
+  div{
+    cursor: pointer;
+  }
 `;

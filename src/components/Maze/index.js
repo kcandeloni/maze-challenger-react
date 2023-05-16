@@ -9,7 +9,7 @@ function ContainerMaze({ mazesize = 8 }) {
   };
 
   return (
-    <Container background={"url(https://avatars.githubusercontent.com/u/12499886?v=4)"}>
+    <Container>
       {opMaze[mazesize]}
     </ Container>
   );

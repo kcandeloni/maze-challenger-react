@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export default styled.div`
-    background: ${props => props.background};
-    background-size: cover;
+    background-image: linear-gradient(180deg, #2af598 0%, #009efd 100%);
     min-height: 100vh;
     width: 100%;
     display: flex;

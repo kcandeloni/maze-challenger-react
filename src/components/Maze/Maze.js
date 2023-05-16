@@ -1,7 +1,13 @@
 import { useState } from "react";
-
-import styled from "styled-components";
 import { useEffect } from "react";
+import { 
+  BsCaretDownSquareFill,
+  BsCaretUpSquareFill,
+  BsCaretLeftSquareFill,
+  BsCaretRightSquareFill
+} from "react-icons/bs";
+import { IoIosRefreshCircle } from "react-icons/io";
+import { BsWhatsapp } from "react-icons/bs";
 
 import getMaze from "./../../services/serviceMaze";
 import RenderMaze from "./RenderMeze";
@@ -12,7 +18,9 @@ import Info from "../common/Info";
 import Menu from "../common/Menu";
 import Rank from "../common/Rank";
 import { ContainerSelect } from "../common/ContainerSelect";
+import { ContainerController } from "./ContainerController";
 import TopBar from "../common/TopBar";
+import ResultGame from "./ResultGame";
 
 export default function Maze({ n }) {
   const maze = getMaze(n);
@@ -85,12 +93,22 @@ export default function Maze({ n }) {
     }, []);
     return (
       <ContainerController>
-        <button onClick={() => move("up")}>up</button>
-        <span>
-          <button onClick={() => move("left")}>left</button>
-          <button onClick={() => move("right")}>right</button>
-        </span>
-        <button onClick={() => move("down")}>donw</button>
+        <div className="buttonController">
+          <BsCaretUpSquareFill onClick={() => move("up")} />
+        </div>
+        
+        <div className="mid">
+          <div className="buttonController">
+            <BsCaretLeftSquareFill onClick={() => move("left")} />
+          </div>
+          <div className="buttonController">
+            <BsCaretRightSquareFill onClick={() => move("right")} />
+          </div>
+        </div>
+        <div className="buttonController">
+          <BsCaretDownSquareFill onClick={() => move("down")} />
+        </div>
+        
       </ ContainerController>
     );
   }
@@ -103,6 +121,7 @@ export default function Maze({ n }) {
     return false;
   }
   function Result() {
+    const [resultView, setResultView] = useState(true);
     function handleReset(event) {
       if (event.keyCode === 0x0D || event.keyCode === 0x20 || event.keyCode === 0x1B) {
         event.preventDefault();
@@ -117,20 +136,49 @@ export default function Maze({ n }) {
     }, []);
     const state = mazeUpdated[positionUpdated.line][positionUpdated.column];
     if(state === 4) {
-      return (<ContainerController>
-        <>Win</>
-        <button onClick={() => reset()}>
-          Reset
-        </button>
-      </ContainerController>);
+      return(
+        <>
+          {resultView ? 
+            <ResultGame setResultView={setResultView}> 
+              <>
+                <p>Congratulations!</p> 
+                <p>You Win!!</p> 
+                <div className="compartilhar">
+                  <BsWhatsapp onClick={() => window.open("https://api.whatsapp.com/send?text=https://maze-challenger.vercel.app/")}/>
+                  <p onClick={() => window.open("https://api.whatsapp.com/send?text=https://maze-challenger.vercel.app/")}>
+                Desafie os amigos!
+                  </p>
+                </ div>       
+                <div className="reset" onClick={() => reset()}>
+                  <IoIosRefreshCircle />
+                </div>
+              </> 
+            </ ResultGame> : 
+            <ContainerController>
+              <div className="reset" onClick={() => reset()}>
+                <IoIosRefreshCircle />
+              </div>
+            </ContainerController>}
+        </>);
     }
     return (
-      <ContainerController>
-        <>Lose</>
-        <button onClick={() => reset()}>
-          Reset
-        </button>
-      </ContainerController>);
+      <>
+        {resultView ? 
+          <ResultGame setResultView={setResultView}> 
+            <>
+              <>Lose</>
+              <div className="reset" onClick={() => reset()}>
+                <IoIosRefreshCircle />
+                <p>reset</p>
+              </div>
+            </> 
+          </ ResultGame> : 
+          <ContainerController>
+            <div className="reset" onClick={() => reset()}>
+              <IoIosRefreshCircle />
+            </div>
+          </ContainerController>}
+      </>);
   }
 
   return (
@@ -152,20 +200,3 @@ export default function Maze({ n }) {
     </div>
   );
 }
-
-const ContainerController = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  height: 142px;
-  width: 142px;
-  background-color: aliceblue;
-  opacity: 0.5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  button{
-    margin: 8px;
-  }
-`;
