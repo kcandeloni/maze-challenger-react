@@ -1,17 +1,26 @@
 import styled from "styled-components";
 import { GiOctopus } from "react-icons/gi";
+import { GiPirateGrave } from "react-icons/gi";
 
 import Line from "./Line";
 
 export default function RenderMaze({ maze, position, children }) {
+  let person = <GiOctopus />;
+  if(maze[position.line][position.column] === 1) person = <DeadOctopus />;
   return (
     <ContainerMaze>
       {maze.map((l, index) => <Line key={index} line={l}/>)}
-      <ContainerPosition {...position} ><GiOctopus /></ContainerPosition>
+      <ContainerPosition {...position} >{person}</ContainerPosition>
       {children}
     </ContainerMaze>
   );
 }
+
+const DeadOctopus = styled(GiPirateGrave)`
+  border-radius: 5px;
+  transition: all 1s;
+  font-size: 28px;
+`;
 
 const ContainerMaze = styled.div`
   position: relative;
