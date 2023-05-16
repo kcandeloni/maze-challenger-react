@@ -28,10 +28,12 @@ export default function Maze({ n }) {
   const position = { line: 0, column: 0 };
   const [positionUpdated, setPositionUpdated] = useState(position);
   const [select, setSelect] = useState(false);
+  const [contMoves, setContMoves] = useState(0);
 
   function reset() {
     setMazeUpdated(maze);
     setPositionUpdated(position);
+    setContMoves(0);
   }
 
   function move(direction = "left") {
@@ -58,6 +60,7 @@ export default function Maze({ n }) {
       position.line++;
     }
     const newMaze = updateMaze(mazeUpdated);
+    setContMoves(contMoves + 1);
     setMazeUpdated([ ...newMaze]);
     setPositionUpdated({ ...position });
   }
@@ -141,8 +144,8 @@ export default function Maze({ n }) {
           {resultView ? 
             <ResultGame setResultView={setResultView}> 
               <>
-                <p>Congratulations!</p> 
-                <p>You Win!!</p> 
+                <p>You Win!!</p>
+                <p>Moves: {contMoves}</p> 
                 <div className="compartilhar">
                   <BsWhatsapp onClick={() => window.open("https://api.whatsapp.com/send?text=https://maze-challenger.vercel.app/")}/>
                   <p onClick={() => window.open("https://api.whatsapp.com/send?text=https://maze-challenger.vercel.app/")}>
@@ -166,7 +169,7 @@ export default function Maze({ n }) {
         {resultView ? 
           <ResultGame setResultView={setResultView}> 
             <>
-              <>Lose</>
+              <>You Lose in {contMoves} moves</>
               <div className="reset" onClick={() => reset()}>
                 <IoIosRefreshCircle />
                 <p>reset</p>
